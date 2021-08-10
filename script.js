@@ -119,13 +119,24 @@ const currencies = new Map([
 const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const eurToUsd = 1.1;
 
-const movementsUSd = movements.map(function (mov) {
-  return mov * eurToUsd;
-});
+const movementsUSd = movements.map(mov => mov + eurToUsd);
+
 console.log(movements);
 console.log(movementsUSd);
 
-const movementsUSdfor = [];
+const movementsUSdFor = [];
 
 for (const mov of movements) {
+  movementsUSdFor.push(mov * eurToUsd);
 }
+console.log(movementsUSdFor);
+
+const movementsD = movements.map((mov, i, arr) => {
+  if (mov > 0) {
+    return `Movement ${i + i} you deposited ${mov}`;
+  } else {
+    return `Movement ${i + i} you withdrawen ${Math.abs(mov)}`;
+  }
+});
+
+console.log(movementsD);
