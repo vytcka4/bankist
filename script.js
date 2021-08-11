@@ -77,6 +77,21 @@ const dispayMovements = function (movements) {
 };
 
 dispayMovements(account1.movements);
+const createUsernames = function (accounts) {
+  accounts.forEach(function (account) {
+    account.username = account.owner
+      .toLowerCase()
+      .split(' ')
+      .map(function (name) {
+        return name[0];
+      })
+      .join('');
+  });
+};
+
+createUsernames(accounts);
+console.log(accounts);
+
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
 // LECTURES
@@ -116,27 +131,25 @@ const currencies = new Map([
 // currenciesUni.forEach(function (value, _, map) {
 //   console.log(`${key}: ${value}`);
 // });
-const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
-const eurToUsd = 1.1;
+// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+// const eurToUsd = 1.1;
 
-const movementsUSd = movements.map(mov => mov + eurToUsd);
+// const movementsUSd = movements.map(mov => mov + eurToUsd);
 
-console.log(movements);
-console.log(movementsUSd);
+// console.log(movements);
+// console.log(movementsUSd);
 
-const movementsUSdFor = [];
+// const movementsUSdFor = [];
 
-for (const mov of movements) {
-  movementsUSdFor.push(mov * eurToUsd);
-}
-console.log(movementsUSdFor);
+// for (const mov of movements) {
+//   movementsUSdFor.push(mov * eurToUsd);
+// }
+// console.log(movementsUSdFor);
 
-const movementsD = movements.map((mov, i, arr) => {
-  if (mov > 0) {
-    return `Movement ${i + i} you deposited ${mov}`;
-  } else {
-    return `Movement ${i + i} you withdrawen ${Math.abs(mov)}`;
-  }
-});
-
-console.log(movementsD);
+// const movementsD = movements.map((mov, i, arr) => {
+//   if (mov > 0) {
+//     return `Movement ${i + i} you deposited ${mov}`;
+//   } else {
+//     return `Movement ${i + i} you withdrawen ${Math.abs(mov)}`;
+//   }
+// });
