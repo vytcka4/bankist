@@ -60,7 +60,7 @@ const inputTransferAmount = document.querySelector('.form__input--amount');
 const inputLoanAmount = document.querySelector('.form__input--loan-amount');
 const inputCloseUsername = document.querySelector('.form__input--user');
 const inputClosePin = document.querySelector('.form__input--pin');
-
+const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
 const dispayMovements = function (movements) {
   containerMovements.innerHTML = '';
   movements.forEach(function (mov, i) {
@@ -76,6 +76,13 @@ const dispayMovements = function (movements) {
   });
 };
 
+const calcDisplayBalance = function (movements) {
+  const balance = movements.reduce((acc, mov) => acc + mov, 0);
+  labelBalance.textContent = `${balance} EUR`;
+};
+
+calcDisplayBalance(account1.movements);
+
 dispayMovements(account1.movements);
 const createUsernames = function (accounts) {
   accounts.forEach(function (account) {
@@ -90,7 +97,6 @@ const createUsernames = function (accounts) {
 };
 
 createUsernames(accounts);
-console.log(accounts);
 
 /////////////////////////////////////////////////
 /////////////////////////////////////////////////
@@ -131,7 +137,7 @@ const currencies = new Map([
 // currenciesUni.forEach(function (value, _, map) {
 //   console.log(`${key}: ${value}`);
 // });
-// const movements = [200, 450, -400, 3000, -650, -130, 70, 1300];
+
 // const eurToUsd = 1.1;
 
 // const movementsUSd = movements.map(mov => mov + eurToUsd);
