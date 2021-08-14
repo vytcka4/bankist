@@ -104,6 +104,7 @@ const calcDisplaySummary = function (movements) {
 calcDisplaySummary(account1.movements);
 
 dispayMovements(account1.movements);
+
 const createUsernames = function (accounts) {
   accounts.forEach(function (account) {
     account.username = account.owner
@@ -117,6 +118,19 @@ const createUsernames = function (accounts) {
 };
 
 createUsernames(accounts);
+
+let currentAccount;
+
+btnLogin.addEventListener('click', function (e) {
+  e.preventDefault();
+  currentAccount = accounts.find(
+    acc => acc.username === inputLoginUsername.value
+  );
+  console.log(currentAccount);
+  if (currentAccount.pin === Number(inputLoginPin.value)) {
+    console.log('login');
+  }
+});
 
 // const eurToUsd = 1.1;
 
