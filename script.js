@@ -186,7 +186,7 @@ btnLogin.addEventListener('click', function (e) {
     containerApp.style.opacity = 100;
     const now = new Date();
     const day = `${now.getDate()}`.padStart(2, 0);
-    const month = `${now.getMonth()}`.padStart(2, 0);
+    const month = `${now.getMonth() + 1}`.padStart(2, 0);
     const year = now.getFullYear();
     const hour = now.getHours();
     const min = now.getMinutes();
@@ -219,6 +219,9 @@ btnTransfer.addEventListener('click', function (e) {
     currentAccount.movements.push(-amount);
     receiverAcc.movements.push(amount);
 
+    currentAccount.movementsDates.push(new Date().toISOString());
+    receiverAccount.movementsDates.push(new Date().toISOString());
+
     // Update UI
     updateUI(currentAccount);
   }
@@ -232,6 +235,7 @@ btnLoan.addEventListener('click', function (e) {
   if (amount > 0 && currentAccount.movements.some(mov => mov >= amount * 0.1)) {
     // Add movement
     currentAccount.movements.push(amount);
+    currentAccount.movementsDates.push(new Date().toISOString());
 
     // Update UI
     updateUI(currentAccount);
