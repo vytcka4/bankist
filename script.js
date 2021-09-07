@@ -21,9 +21,9 @@ const account1 = {
     '2020-01-28T09:15:04.904Z',
     '2020-04-01T10:17:24.185Z',
     '2020-05-08T14:11:59.604Z',
-    '2020-05-27T17:01:17.194Z',
-    '2020-07-11T23:36:17.929Z',
-    '2020-07-12T10:51:36.790Z',
+    '2021-08-27T17:01:17.194Z',
+    '2021-09-01T23:36:17.929Z',
+    '2021-09-05T10:51:36.790Z',
   ],
   currency: 'EUR',
   locale: 'pt-PT', // de-DE
@@ -80,7 +80,22 @@ const inputClosePin = document.querySelector('.form__input--pin');
 
 /////////////////////////////////////////////////
 // Functions
+const formatMovementDate = function (date, locale) {
+  const calcDaysPassed = (date1, date2) =>
+    Math.round(Math.abs(date2 - date1) / (1000 * 60 * 60 * 24));
 
+  const daysPassed = calcDaysPassed(new Date(), date);
+  if (daysPassed === 0) return 'Today';
+  if (daysPassed === 1) return 'Yesterday';
+  if (daysPassed <= 7) return `${daysPassed}days ago`;
+  // else {
+  //   const day = `${date.getDate()}`.padStart(2, 0);
+  //   const month = `${date.getMonth()}`.padStart(2, 0);
+  //   const year = date.getFullYear();
+  //   return `    ${day}/${month}/${year}`;
+  // }
+  return new Intl.DateTimeFormat();
+};
 const displayMovements = function (acc, sort = false) {
   containerMovements.innerHTML = '';
 
@@ -91,10 +106,7 @@ const displayMovements = function (acc, sort = false) {
   movs.forEach(function (mov, i) {
     const type = mov > 0 ? 'deposit' : 'withdrawal';
     const date = new Date(acc.movementsDates[i]);
-    const day = `${date.getDate()}`.padStart(2, 0);
-    const month = `${date.getMonth()}`.padStart(2, 0);
-    const year = date.getFullYear();
-    const displayDate = `    ${day}/${month}/${year}`;
+    const displayDate = formatMovementDate(date, acc.locale);
 
     const html = `
       
@@ -165,9 +177,9 @@ const updateUI = function (acc) {
 let currentAccount;
 
 //fake always logged in
-currentAccount = account1;
-updateUI(currentAccount);
-containerApp.style.opacity = 100;
+// currentAccount = account1;
+// updateUI(currentAccount);
+// containerApp.style.opacity = 100;
 
 btnLogin.addEventListener('click', function (e) {
   // Prevent form from submitting
@@ -185,12 +197,18 @@ btnLogin.addEventListener('click', function (e) {
     }`;
     containerApp.style.opacity = 100;
     const now = new Date();
-    const day = `${now.getDate()}`.padStart(2, 0);
-    const month = `${now.getMonth() + 1}`.padStart(2, 0);
-    const year = now.getFullYear();
-    const hour = now.getHours();
-    const min = now.getMinutes();
-    labelDate.textContent = `${day}/${month}/${year} ${hour}:${min}`;
+    const options = {
+      hour: 'numeric',
+      minute: 'numeric',
+      day: 'numeric',
+      month: 'numeric',
+      year: 'numeric',
+    };
+
+    labelDate.textContent = new Intl.DateTimeFormat(
+      currentAccount.locale,
+      options
+    ).format(now);
 
     // Clear input fields
     inputLoginUsername.value = inputLoginPin.value = '';
